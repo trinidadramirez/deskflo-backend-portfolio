@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {
-  insertUser,
-  getUserViaEmail,
-} = require("../model/user/userModel");
+const { insertUser, getUserViaEmail } = require("../model/user/userModel");
 const { hashPassword, comparePassword } = require("../helpers/bcryptHelper");
+const {
+  generateAccessJWT,
+  generateRefreshJWT,
+} = require("../helpers/jwtHelper");
 
 router.all("/", (req, res, next) => {
   //res.json({ message: "Return from user router" });
@@ -47,9 +48,17 @@ router.post("/login", async (req, res) => {
   }
 
   const result = await comparePassword(password, passwordViaDb);
+
+  if (!result) {
+    return res.json({ status: "error", message: "Invalid entry/entries :(" });
+  }
+
+  const accessToken = await generateAccessJWT(user.email);
+  const refreshToken = await generateRefreshJWT(user.email);
+
   console.log(result);
 
-  res.json({ status: "success", message: "Logged in successfully" });
+  res.json({ status: "success", message: "Logged in successfully", accessToken, refreshToken});
 });
 
 module.exports = router;
