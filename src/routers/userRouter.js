@@ -53,8 +53,8 @@ router.post("/login", async (req, res) => {
     return res.json({ status: "error", message: "Invalid entry/entries :(" });
   }
 
-  const accessToken = await generateAccessJWT(user.email);
-  const refreshToken = await generateRefreshJWT(user.email);
+  const accessToken = await generateAccessJWT(user.email, `${user._id}`);
+  const refreshToken = await generateRefreshJWT(user.email, `${user._id}`);
 
   console.log(result);
 
