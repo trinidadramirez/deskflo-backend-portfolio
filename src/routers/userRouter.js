@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { insertUser, getUserViaEmail } = require("../model/user/userModel");
+const { insertUser, getUserViaEmail, getUserViaId } = require("../model/user/userModel");
 const { hashPassword, comparePassword } = require("../helpers/bcryptHelper");
 const {
   generateAccessJWT,
   generateRefreshJWT,
 } = require("../helpers/jwtHelper");
+const { userAuthorization } = require("../auth/authorization");
 
 router.all("/", (req, res, next) => {
   //res.json({ message: "Return from user router" });
@@ -58,7 +59,22 @@ router.post("/login", async (req, res) => {
 
   console.log(result);
 
-  res.json({ status: "success", message: "Logged in successfully", accessToken, refreshToken});
+  res.json({
+    status: "success",
+    message: "Logged in successfully",
+    accessToken,
+    refreshToken,
+  });
+});
+
+// Get user account router
+router.get("/", userAuthorization, async (req, res) => {
+  // Store id from db in constant
+  const _id = req.userId;
+
+  const userAcct = await getUserViaId(_id)
+
+  res.json({ user: userAcct });
 });
 
 module.exports = router;

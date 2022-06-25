@@ -34,7 +34,16 @@ const generateRefreshJWT = async (email, _id) => {
   }
 };
 
+const verifyJwt = (userJWT) => {
+  try {
+    return Promise.resolve(jwt.verify(userJWT, process.env.JWT_ACCESS_SECRET));
+  } catch (error) {
+    return Promise.resolve(error);
+  }
+};
+
 module.exports = {
   generateAccessJWT,
   generateRefreshJWT,
+  verifyJwt,
 };
