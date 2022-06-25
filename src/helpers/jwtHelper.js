@@ -22,13 +22,13 @@ const generateAccessJWT = async (email, _id) => {
 
 const generateRefreshJWT = async (email, _id) => {
   try {
-    const refreshToken = jwt.sign({ email }, process.env.JWT_REFRESH_SECRET, {
+    const refreshToken = await jwt.sign({ email }, process.env.JWT_REFRESH_SECRET, {
       expiresIn: "14d",
     });
 
     await storeRefreshJWT(_id, refreshToken);
 
-    return Promise.resolve(_id, refreshToken);
+    return Promise.resolve(refreshToken);
   } catch {
     return Promise.reject(error);
   }
@@ -42,8 +42,17 @@ const verifyJwt = (userJWT) => {
   }
 };
 
+const verifyRefreshJwt = (userJWT) => {
+  try {
+    return Promise.resolve(jwt.verify(userJWT, process.env.JWT_REFRESH_SECRET));
+  } catch (error) {
+    return Promise.resolve(error);
+  }
+};
+
 module.exports = {
   generateAccessJWT,
   generateRefreshJWT,
   verifyJwt,
+  verifyRefreshJwt,
 };

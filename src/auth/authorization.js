@@ -1,5 +1,5 @@
 const { verifyJwt } = require("../helpers/jwtHelper");
-const { getJwtToken } = require("../helpers/redisHelper");
+const { getJwtToken, deleteJwtToken } = require("../helpers/redisHelper");
 
 const userAuthorization = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -19,6 +19,7 @@ const userAuthorization = async (req, res, next) => {
     req.userId = userId;
     return next();
   }
+  deleteJwtToken(authorization);
   return res.status(403).json({ message: "Not Authorized" });
 
   // Verify if jwt exists in Redis

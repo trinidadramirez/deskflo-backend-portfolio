@@ -7,6 +7,11 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const port = process.env.PORT || 3001;
 
+// Load routers
+const userRouter = require("./src/routers/userRouter");
+const ticketRouter = require("./src/routers/ticketRouter");
+const tokenRouter = require("./src/routers/tokenRouter");
+
 // Security for API
 app.use(helmet());
 
@@ -34,13 +39,12 @@ if (process.env.NODE_ENV !== "production") {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Load routers
-const userRouter = require("./src/routers/userRouter");
-const ticketRouter = require("./src/routers/ticketRouter");
+
 
 // Use routers
 app.use("/v1/user", userRouter);
 app.use("/v1/ticket", ticketRouter);
+app.use("/v1/token", tokenRouter);
 
 app.use("*", (req, res) => {
   res.json({ message: "Router could not find any resources :(" });

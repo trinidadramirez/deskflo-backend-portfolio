@@ -29,7 +29,16 @@ const getJwtToken = (key) => {
   });
 };
 
+const deleteJwtToken = key => {
+  try {
+    client.del(key);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   setJwtToken,
   getJwtToken,
+  deleteJwtToken,
 };
