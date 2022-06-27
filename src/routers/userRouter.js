@@ -1,12 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { insertUser, getUserViaEmail, getUserViaId } = require("../model/user/userModel");
+const {
+  insertUser,
+  getUserViaEmail,
+  getUserViaId,
+  storeRefreshJWT,
+} = require("../model/user/userModel");
 const { hashPassword, comparePassword } = require("../helpers/bcryptHelper");
 const {
   generateAccessJWT,
   generateRefreshJWT,
 } = require("../helpers/jwtHelper");
 const { userAuthorization } = require("../auth/authorization");
+const { deleteJwtToken } = require("../helpers/redisHelper");
 
 router.all("/", (req, res, next) => {
   //res.json({ message: "Return from user router" });
@@ -70,9 +76,29 @@ router.get("/", userAuthorization, async (req, res) => {
   // Store id from db in constant
   const _id = req.userId;
 
-  const userAcct = await getUserViaId(_id)
+  const userAcct = await getUserViaId(_id);
 
   res.json({ user: userAcct });
+});
+
+// User logout router
+router.delete("/logout", userAuthorization, async (req, res) => {
+  const { authorization } = req.headers;
+
+  // Store id from db in constant
+  const _id = req.userId;
+
+  // Delete access jwt from Redis db
+  deleteJwtToken(authorization);
+
+  // Delete refresh jwt from MongoDB
+  const result = await storeRefreshJWT(_id, "");
+
+  if (result._id) {
+    return res.json({ status: "success", message: "User logged out" });
+  }
+
+  res.json({ error: "failed", message: "User unable to log out" });
 });
 
 module.exports = router;

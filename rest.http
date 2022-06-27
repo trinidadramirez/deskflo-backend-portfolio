@@ -24,3 +24,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBh
 ### Get new jwt
 GET http://localhost:3001/v1/token
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MTM3NDU3LCJleHAiOjE2NTczNDcwNTd9.BA1jTnrPJkeF6efgeJHcRThdIYYaweFyDWBrmGwuQsM
+
+### User logout endpoint
+DELETE http://localhost:3001/v1/user/logout
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzcxMDI5LCJleHAiOjE2NTYzNzIyMjl9.VXI9ykkZoPJWBbT56aofj2TFpmBl6j9Gipi8RFwI8Ls
