@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { insertNewTicket, getTickets } = require("../model/ticket/ticketModel");
+const { insertNewTicket, getTickets, getTicketsById } = require("../model/ticket/ticketModel");
 const { userAuthorization } = require("../auth/authorization");
 
 router.all("/", (req, res, next) => {
@@ -8,7 +8,7 @@ router.all("/", (req, res, next) => {
   next();
 });
 
-// Create ticket router
+// Create ticket (router)
 router.post("/", userAuthorization, async (req, res) => {
   try {
     // Get new ticket submission
@@ -41,12 +41,28 @@ router.post("/", userAuthorization, async (req, res) => {
   }
 });
 
-// Get all tickets by user router
+// Get all tickets by user (router)
 router.get("/", userAuthorization, async (req, res) => {
   try {
     const userId = req.userId;
     const result = await getTickets(userId);
-    
+
+    return res.json({
+      status: "success",
+      result,
+    });
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+});
+
+// Get specific ticket (router)
+router.get("/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const requestorId = req.userId;
+    const result = await getTicketsById(_id, requestorId);
+
     return res.json({
       status: "success",
       result,

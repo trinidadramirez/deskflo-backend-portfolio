@@ -30,7 +30,23 @@ const getTickets = (requestorId) => {
   });
 };
 
+const getTicketsById = (_id, requestorId) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema
+        .find({ _id, requestorId })
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   insertNewTicket,
   getTickets,
+  getTicketsById,
 };
