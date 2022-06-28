@@ -15,6 +15,22 @@ const insertNewTicket = (ticketObj) => {
   });
 };
 
+const getTickets = (requestorId) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema
+        .find({ requestorId })
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   insertNewTicket,
+  getTickets,
 };
