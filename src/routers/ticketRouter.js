@@ -1,6 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { insertNewTicket, getTickets, getTicketsById } = require("../model/ticket/ticketModel");
+const {
+  insertNewTicket,
+  getTickets,
+  getTicketsById,
+  putReply,
+  resolveTicket,
+  cancelTicket,
+} = require("../model/ticket/ticketModel");
 const { userAuthorization } = require("../auth/authorization");
 
 router.all("/", (req, res, next) => {
@@ -67,6 +74,61 @@ router.get("/:_id", userAuthorization, async (req, res) => {
       status: "success",
       result,
     });
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+});
+
+// Put updated messages in ticket
+router.put("/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { message, sender } = req.body;
+    const { _id } = req.params;
+    const requestorId = req.userId;
+    const result = await putReply({ _id, message, sender });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "message updated",
+      });
+    }
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+});
+
+// Resolve ticket
+router.patch("/resolve-ticket/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const requestorId = req.userId;
+    const result = await resolveTicket({ _id, requestorId });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "ticket resolved!",
+      });
+    }
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+});
+
+// Cancel ticket
+router.patch("/cancel-ticket/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const requestorId = req.userId;
+    const result = await cancelTicket({ _id, requestorId });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "ticket canceled!",
+      });
+    }
   } catch (error) {
     res.json({ status: "failed", message: error.message });
   }

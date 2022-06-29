@@ -18,8 +18,7 @@ const insertNewTicket = (ticketObj) => {
 const getTickets = (requestorId) => {
   return new Promise((resolve, reject) => {
     try {
-      TicketSchema
-        .find({ requestorId })
+      TicketSchema.find({ requestorId })
         .then((data) => {
           resolve(data);
         })
@@ -33,8 +32,69 @@ const getTickets = (requestorId) => {
 const getTicketsById = (_id, requestorId) => {
   return new Promise((resolve, reject) => {
     try {
-      TicketSchema
-        .find({ _id, requestorId })
+      TicketSchema.find({ _id, requestorId })
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const putReply = ({ _id, message, sender }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema.findOneAndUpdate(
+        { _id },
+        {
+          $push: {
+            chat: { message, sender },
+          },
+        },
+        { new: true }
+      )
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const resolveTicket = ({ _id, requestorId }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema.findOneAndUpdate(
+        { _id, requestorId },
+        {
+          status: "Resolved",
+        },
+        { new: true }
+      )
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const cancelTicket = ({ _id, requestorId }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema.findOneAndUpdate(
+        { _id, requestorId },
+        {
+          status: "Canceled",
+        },
+        { new: true }
+      )
         .then((data) => {
           resolve(data);
         })
@@ -49,4 +109,7 @@ module.exports = {
   insertNewTicket,
   getTickets,
   getTicketsById,
+  putReply,
+  resolveTicket,
+  cancelTicket,
 };

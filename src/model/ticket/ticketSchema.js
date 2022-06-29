@@ -33,7 +33,7 @@ const TicketSchema = new Schema({
 
   chat: [
     {
-      requestor: {
+      sender: {
         type: String,
         maxLength: 50,
         required: true,
