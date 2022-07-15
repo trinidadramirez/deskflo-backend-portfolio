@@ -6,7 +6,7 @@ client.on('error', (err) => console.log('Redis Client Error', err));
 const setJwtToken = (key, value) => {
   return new Promise((resolve, reject) => {
     try {
-      client.set(key, value, (err, res) => {
+      return client.set(key, value, (err, res) => {
         if (err) reject(err);
         resolve(res);
       });

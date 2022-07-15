@@ -28,3 +28,42 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBh
 ### User logout endpoint
 DELETE http://localhost:3001/v1/user/logout
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzcxMDI5LCJleHAiOjE2NTYzNzIyMjl9.VXI9ykkZoPJWBbT56aofj2TFpmBl6j9Gipi8RFwI8Ls
+
+### Get specific ticket
+GET http://localhost:3001/v1/ticket/62ba780e0c952169c06e958b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzkxMDA5LCJleHAiOjE2NTYzOTIyMDl9.frwhD9weBcHIwGpJIQdhesJnDO6lX0mWTINy5cNnLRE
+
+### Get all tickets
+GET http://localhost:3001/v1/ticket
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzkxMDA5LCJleHAiOjE2NTYzOTIyMDl9.frwhD9weBcHIwGpJIQdhesJnDO6lX0mWTINy5cNnLRE
+
+### Open new ticket
+POST http://localhost:3001/v1/ticket
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NjQ3MDI4LCJleHAiOjE2NTY3MzM0Mjh9.4sGbNNyZ4YU70OwoG_jjQtOZqQSACGK4i2x1sWnWVQw
+Content-Type: application/json
+
+{
+    "requestor": "Mary Smith",
+    "shortDescription": "monitor not displaying",
+    "description": "one of the monitors is not turning on. tried power-cycling dock, but that did not work",
+    "sender": "Mary Smith",
+    "message": "is there an update you can provide on this ticket?"
+}
+
+### Reply to message in ticket
+PUT http://localhost:3001/v1/ticket/62ba88fd368a33813de0ebc7
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NTQ0ODIzLCJleHAiOjE2NTY1NDYwMjN9.Gl-pontJhgmhq6fgRuPc52zQ99aOVho2M39cbNWFtZQ
+Content-Type: application/json
+
+{
+    "message": "hello",
+    "sender": "Trin"
+}
+
+### Resolve ticket
+PATCH http://localhost:3001/v1/ticket/resolve-ticket/62ba88fd368a33813de0ebc7
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NTQ0ODIzLCJleHAiOjE2NTY1NDYwMjN9.Gl-pontJhgmhq6fgRuPc52zQ99aOVho2M39cbNWFtZQ
+
+### Cancel ticket
+PATCH http://localhost:3001/v1/ticket/cancel-ticket/62ba88fd368a33813de0ebc7
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NTQ0ODIzLCJleHAiOjE2NTY1NDYwMjN9.Gl-pontJhgmhq6fgRuPc52zQ99aOVho2M39cbNWFtZQ

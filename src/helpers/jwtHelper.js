@@ -8,7 +8,7 @@ const generateAccessJWT = async (email, _id) => {
       { email },
       process.env.JWT_ACCESS_SECRET,
       {
-        expiresIn: "20m",
+        expiresIn: "1d",
       }
     );
 

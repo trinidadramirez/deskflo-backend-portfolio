@@ -21,12 +21,6 @@ const userAuthorization = async (req, res, next) => {
   }
   deleteJwtToken(authorization);
   return res.status(403).json({ message: "Not Authorized" });
-
-  // Verify if jwt exists in Redis
-
-  // Get user id
-
-  // Get user account based on user id
 };
 
 module.exports = {

@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.json({ status: "error", message: "Invalid entry/entries :(" });
+    return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
   }
 
   // Get user from db with email address
@@ -51,13 +51,13 @@ router.post("/login", async (req, res) => {
   const passwordViaDb = user && user._id ? user.password : null;
 
   if (!passwordViaDb) {
-    return res.json({ status: "error", message: "Invalid entry/entries :(" });
+    return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
   }
 
   const result = await comparePassword(password, passwordViaDb);
 
   if (!result) {
-    return res.json({ status: "error", message: "Invalid entry/entries :(" });
+    return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
   }
 
   const accessToken = await generateAccessJWT(user.email, `${user._id}`);

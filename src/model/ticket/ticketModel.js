@@ -105,6 +105,26 @@ const cancelTicket = ({ _id, requestorId }) => {
   });
 };
 
+const reopenTicket = ({ _id, requestorId }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema.findOneAndUpdate(
+        { _id, requestorId },
+        {
+          status: "Reopened",
+        },
+        { new: true }
+      )
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   insertNewTicket,
   getTickets,
@@ -112,4 +132,5 @@ module.exports = {
   putReply,
   resolveTicket,
   cancelTicket,
+  reopenTicket,
 };

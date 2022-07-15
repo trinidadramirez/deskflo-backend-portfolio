@@ -7,11 +7,11 @@ const {
   putReply,
   resolveTicket,
   cancelTicket,
+  reopenTicket,
 } = require("../model/ticket/ticketModel");
 const { userAuthorization } = require("../auth/authorization");
 
 router.all("/", (req, res, next) => {
-  //res.json({ message: "Return from ticket router" });
   next();
 });
 
@@ -19,7 +19,7 @@ router.all("/", (req, res, next) => {
 router.post("/", userAuthorization, async (req, res) => {
   try {
     // Get new ticket submission
-    const { requestor, shortDescription, description, message } = req.body;
+    const { requestor, shortDescription, description, sender, message } = req.body;
     const userId = req.userId;
 
     // Insert new ticket submission in db
@@ -30,17 +30,16 @@ router.post("/", userAuthorization, async (req, res) => {
       description,
       chat: [
         {
-          requestor,
+          sender,
           message,
         },
       ],
     };
     const result = await insertNewTicket(ticketObj);
-    console.log(result);
     if (result._id) {
       return res.json({
         status: "success",
-        message: "new ticket has been created",
+        message: "New ticket has been created!",
       });
     }
   } catch (error) {
@@ -90,7 +89,7 @@ router.put("/:_id", userAuthorization, async (req, res) => {
     if (result._id) {
       return res.json({
         status: "success",
-        message: "message updated",
+        message: "Message Sent Successfully",
       });
     }
   } catch (error) {
@@ -108,7 +107,7 @@ router.patch("/resolve-ticket/:_id", userAuthorization, async (req, res) => {
     if (result._id) {
       return res.json({
         status: "success",
-        message: "ticket resolved!",
+        message: "Ticket Resolved Successfully",
       });
     }
   } catch (error) {
@@ -126,7 +125,25 @@ router.patch("/cancel-ticket/:_id", userAuthorization, async (req, res) => {
     if (result._id) {
       return res.json({
         status: "success",
-        message: "ticket canceled!",
+        message: "Ticket Canceled Successfully",
+      });
+    }
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+});
+
+// Reopen ticket
+router.patch("/reopen-ticket/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const requestorId = req.userId;
+    const result = await reopenTicket({ _id, requestorId });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "Ticket Reopened Successfully",
       });
     }
   } catch (error) {
