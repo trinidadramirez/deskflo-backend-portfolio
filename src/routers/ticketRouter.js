@@ -98,8 +98,7 @@ router.put("/:_id", userAuthorization, async (req, res) => {
 router.patch("/resolve-ticket/:_id", userAuthorization, async (req, res) => {
   try {
     const { _id } = req.params;
-    const requestorId = req.userId;
-    const result = await resolveTicket({ _id, requestorId });
+    const result = await resolveTicket({ _id });
 
     if (result._id) {
       return res.json({
@@ -116,8 +115,7 @@ router.patch("/resolve-ticket/:_id", userAuthorization, async (req, res) => {
 router.patch("/cancel-ticket/:_id", userAuthorization, async (req, res) => {
   try {
     const { _id } = req.params;
-    const requestorId = req.userId;
-    const result = await cancelTicket({ _id, requestorId });
+    const result = await cancelTicket({ _id });
 
     if (result._id) {
       return res.json({
@@ -134,8 +132,7 @@ router.patch("/cancel-ticket/:_id", userAuthorization, async (req, res) => {
 router.patch("/reopen-ticket/:_id", userAuthorization, async (req, res) => {
   try {
     const { _id } = req.params;
-    const requestorId = req.userId;
-    const result = await reopenTicket({ _id, requestorId });
+    const result = await reopenTicket({ _id });
 
     if (result._id) {
       return res.json({

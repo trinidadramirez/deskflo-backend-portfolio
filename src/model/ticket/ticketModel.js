@@ -24,7 +24,6 @@ const getTickets = (requestorId) => {
           .then((data) => {
             resolve(data);
           })
-          .catch((error) => reject(error));
       } catch (error) {
         reject(error);
       }
@@ -78,11 +77,11 @@ const putReply = ({ _id, message, sender }) => {
   });
 };
 
-const resolveTicket = ({ _id, requestorId }) => {
+const resolveTicket = ({ _id }) => {
   return new Promise((resolve, reject) => {
     try {
       TicketSchema.findOneAndUpdate(
-        { _id, requestorId },
+        { _id },
         {
           status: "Resolved",
         },
@@ -98,11 +97,11 @@ const resolveTicket = ({ _id, requestorId }) => {
   });
 };
 
-const cancelTicket = ({ _id, requestorId }) => {
+const cancelTicket = ({ _id }) => {
   return new Promise((resolve, reject) => {
     try {
       TicketSchema.findOneAndUpdate(
-        { _id, requestorId },
+        { _id },
         {
           status: "Canceled",
         },
@@ -118,11 +117,11 @@ const cancelTicket = ({ _id, requestorId }) => {
   });
 };
 
-const reopenTicket = ({ _id, requestorId }) => {
+const reopenTicket = ({ _id }) => {
   return new Promise((resolve, reject) => {
     try {
       TicketSchema.findOneAndUpdate(
-        { _id, requestorId },
+        { _id },
         {
           status: "Reopened",
         },
