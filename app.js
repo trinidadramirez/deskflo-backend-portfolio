@@ -42,9 +42,9 @@ app.use(bodyParser.json());
 
 
 // Use routers
-app.use("/v1/user", userRouter);
-app.use("/v1/ticket", ticketRouter);
-app.use("/v1/token", tokenRouter);
+app.use("/user", userRouter);
+app.use("/ticket", ticketRouter);
+app.use("/token", tokenRouter);
 
 app.use("*", (req, res) => {
   res.json({ message: "Router could not find any resources :(" });

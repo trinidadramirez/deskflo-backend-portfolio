@@ -1,5 +1,5 @@
 ### New user sign-up endpoint
-POST http://localhost:3001/v1/user
+POST http://localhost:3001/user
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### User sign-in endpoint - authentication
-POST http://localhost:3001/v1/user/login
+POST http://localhost:3001/user/login
 Content-Type: application/json
 
 {
@@ -18,27 +18,27 @@ Content-Type: application/json
 }
 
 ### Get user profile endpoint - authorization
-GET http://localhost:3001/v1/user
+GET http://localhost:3001/user
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MTk5OTYwLCJleHAiOjE2NTYyMDExNjB9.f9572___Qqp-SAD06QZCMbLJDaaGxdXdIB6_Gm5amQU
 
 ### Get new jwt
-GET http://localhost:3001/v1/token
+GET http://localhost:3001/token
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MTM3NDU3LCJleHAiOjE2NTczNDcwNTd9.BA1jTnrPJkeF6efgeJHcRThdIYYaweFyDWBrmGwuQsM
 
 ### User logout endpoint
-DELETE http://localhost:3001/v1/user/logout
+DELETE http://localhost:3001/user/logout
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzcxMDI5LCJleHAiOjE2NTYzNzIyMjl9.VXI9ykkZoPJWBbT56aofj2TFpmBl6j9Gipi8RFwI8Ls
 
 ### Get specific ticket
-GET http://localhost:3001/v1/ticket/62ba780e0c952169c06e958b
+GET http://localhost:3001/ticket/62ba780e0c952169c06e958b
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzkxMDA5LCJleHAiOjE2NTYzOTIyMDl9.frwhD9weBcHIwGpJIQdhesJnDO6lX0mWTINy5cNnLRE
 
 ### Get all tickets
-GET http://localhost:3001/v1/ticket
+GET http://localhost:3001/ticket
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2MzkxMDA5LCJleHAiOjE2NTYzOTIyMDl9.frwhD9weBcHIwGpJIQdhesJnDO6lX0mWTINy5cNnLRE
 
 ### Open new ticket
-POST http://localhost:3001/v1/ticket
+POST http://localhost:3001/ticket
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NjQ3MDI4LCJleHAiOjE2NTY3MzM0Mjh9.4sGbNNyZ4YU70OwoG_jjQtOZqQSACGK4i2x1sWnWVQw
 Content-Type: application/json
 
@@ -51,7 +51,7 @@ Content-Type: application/json
 }
 
 ### Reply to message in ticket
-PUT http://localhost:3001/v1/ticket/62ba88fd368a33813de0ebc7
+PUT http://localhost:3001/ticket/62ba88fd368a33813de0ebc7
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NTQ0ODIzLCJleHAiOjE2NTY1NDYwMjN9.Gl-pontJhgmhq6fgRuPc52zQ99aOVho2M39cbNWFtZQ
 Content-Type: application/json
 
@@ -61,9 +61,9 @@ Content-Type: application/json
 }
 
 ### Resolve ticket
-PATCH http://localhost:3001/v1/ticket/resolve-ticket/62ba88fd368a33813de0ebc7
+PATCH http://localhost:3001/ticket/resolve-ticket/62ba88fd368a33813de0ebc7
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NTQ0ODIzLCJleHAiOjE2NTY1NDYwMjN9.Gl-pontJhgmhq6fgRuPc52zQ99aOVho2M39cbNWFtZQ
 
 ### Cancel ticket
-PATCH http://localhost:3001/v1/ticket/cancel-ticket/62ba88fd368a33813de0ebc7
+PATCH http://localhost:3001/ticket/cancel-ticket/62ba88fd368a33813de0ebc7
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGNvbXBhbnkuY29tIiwiaWF0IjoxNjU2NTQ0ODIzLCJleHAiOjE2NTY1NDYwMjN9.Gl-pontJhgmhq6fgRuPc52zQ99aOVho2M39cbNWFtZQ

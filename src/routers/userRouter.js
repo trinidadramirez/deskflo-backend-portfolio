@@ -14,7 +14,6 @@ const {
 const { userAuthorization } = require("../auth/authorization");
 const { deleteJwtToken } = require("../helpers/redisHelper");
 
-
 router.all("/", (req, res, next) => {
   //res.json({ message: "Return from user router" });
   next();
@@ -39,8 +38,45 @@ router.post("/", async (req, res) => {
   }
 });
 
-// User sign-in router
+// User sign-in router for admin console
 router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
+  }
+
+  if (!email.includes("admin")) {
+    return res.json({ status: "error", message: "You are not authorized to use this application 😐" });
+  }
+
+  // Get user from db with email address
+  const user = await getUserViaEmail(email);
+  const passwordViaDb = user && user._id ? user.password : null;
+
+  if (!passwordViaDb) {
+    return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
+  }
+
+  const result = await comparePassword(password, passwordViaDb);
+
+  if (!result) {
+    return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
+  }
+
+  const accessToken = await generateAccessJWT(user.email, `${user._id}`);
+  const refreshToken = await generateRefreshJWT(user.email, `${user._id}`);
+
+  res.json({
+    status: "success",
+    message: "Logged in successfully",
+    accessToken,
+    refreshToken,
+  });
+});
+
+// User sign-in router customer portal
+router.post("/login-portal", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
