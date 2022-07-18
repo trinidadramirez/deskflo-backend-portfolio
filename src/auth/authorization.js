@@ -3,7 +3,7 @@ const { getJwtToken, deleteJwtToken } = require("../helpers/redisHelper");
 
 const userAuthorization = async (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(authorization);
+  console.log("Auth: " + authorization);
 
   // Check validity of jwt
   const decodedToken = await verifyJwt(authorization);
@@ -11,7 +11,7 @@ const userAuthorization = async (req, res, next) => {
 
   if (decodedToken.email) {
     const userId = await getJwtToken(authorization);
-    console.log(userId);
+    console.log("userId: " + userId);
 
     if (!userId) {
       return res.status(403).json({ message: "Not Authorized" });

@@ -52,7 +52,6 @@ router.get("/", userAuthorization, async (req, res) => {
   try {
     const userId = req.userId;
     const result = await getTickets(userId);
-
     return res.json({
       status: "success",
       result,
@@ -66,9 +65,7 @@ router.get("/", userAuthorization, async (req, res) => {
 router.get("/:_id", userAuthorization, async (req, res) => {
   try {
     const { _id } = req.params;
-    const requestorId = req.userId;
-    const result = await getTicketsById(_id, requestorId);
-
+    const result = await getTicketsById(_id);
     return res.json({
       status: "success",
       result,

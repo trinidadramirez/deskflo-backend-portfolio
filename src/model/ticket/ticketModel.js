@@ -1,4 +1,5 @@
 const { TicketSchema } = require("./ticketSchema");
+const adminAccts = ["62d45edba5b6d1c605b25b59"];
 
 const insertNewTicket = (ticketObj) => {
   return new Promise((resolve, reject) => {
@@ -17,22 +18,34 @@ const insertNewTicket = (ticketObj) => {
 
 const getTickets = (requestorId) => {
   return new Promise((resolve, reject) => {
-    try {
-      TicketSchema.find({ requestorId })
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => reject(error));
-    } catch (error) {
-      reject(error);
+    if (adminAccts.includes(requestorId)) {
+      try {
+        TicketSchema.find({})
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => reject(error));
+      } catch (error) {
+        reject(error);
+      }
+    } else {
+      try {
+        TicketSchema.find({requestorId})
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => reject(error));
+      } catch (error) {
+        reject(error);
+      }
     }
   });
 };
 
-const getTicketsById = (_id, requestorId) => {
+const getTicketsById = (_id) => {
   return new Promise((resolve, reject) => {
     try {
-      TicketSchema.find({ _id, requestorId })
+      TicketSchema.find({ _id })
         .then((data) => {
           resolve(data);
         })

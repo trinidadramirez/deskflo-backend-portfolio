@@ -40,10 +40,14 @@ router.post("/", async (req, res) => {
 
 // User sign-in router
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password} = req.body;
 
   if (!email || !password) {
     return res.json({ status: "error", message: "Invalid email address and/or password 😐" });
+  }
+
+  if (!email.includes("admin")) {
+    return res.json({ status: "error", message: "You are not authorized to use this application 😐" });
   }
 
   // Get user from db with email address
@@ -62,7 +66,7 @@ router.post("/login", async (req, res) => {
 
   const accessToken = await generateAccessJWT(user.email, `${user._id}`);
   const refreshToken = await generateRefreshJWT(user.email, `${user._id}`);
-
+  
   res.json({
     status: "success",
     message: "Logged in successfully",
@@ -75,7 +79,6 @@ router.post("/login", async (req, res) => {
 router.get("/", userAuthorization, async (req, res) => {
   // Store id from db in constant
   const _id = req.userId;
-
   const userAcct = await getUserViaId(_id);
 
   res.json({ user: userAcct });
