@@ -137,6 +137,27 @@ const reopenTicket = ({ _id }) => {
   });
 };
 
+const changePriorityOnTicket = ({ _id, priority }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      console.log("--->>> " + priority);
+      TicketSchema.findOneAndUpdate(
+        { _id },
+        {
+          priority: priority,
+        },
+        { new: true }
+      )
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   insertNewTicket,
   getTickets,
@@ -145,4 +166,5 @@ module.exports = {
   resolveTicket,
   cancelTicket,
   reopenTicket,
+  changePriorityOnTicket,
 };

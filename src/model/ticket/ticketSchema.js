@@ -15,6 +15,12 @@ const TicketSchema = new Schema({
     required: true,
     default: "Open",
   },
+  priority: {
+    type: String,
+    maxLength: 1,
+    required: true,
+    default: "2",
+  },
   requestor: {
     type: String,
     maxLength: 100,

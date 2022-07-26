@@ -8,6 +8,7 @@ const {
   resolveTicket,
   cancelTicket,
   reopenTicket,
+  changePriorityOnTicket,
 } = require("../model/ticket/ticketModel");
 const { userAuthorization } = require("../auth/authorization");
 
@@ -19,12 +20,13 @@ router.all("/", (req, res, next) => {
 router.post("/", userAuthorization, async (req, res) => {
   try {
     // Get new ticket submission
-    const { requestor, shortDescription, description, sender, message } = req.body;
+    const { requestor, priority, shortDescription, description, sender, message } = req.body;
     const userId = req.userId;
 
     // Insert new ticket submission in db
     const ticketObj = {
       requestorId: userId,
+      priority,
       requestor,
       shortDescription,
       description,
@@ -138,6 +140,25 @@ router.patch("/reopen-ticket/:_id", userAuthorization, async (req, res) => {
       return res.json({
         status: "success",
         message: "Ticket Reopened Successfully",
+      });
+    }
+  } catch (error) {
+    res.json({ status: "failed", message: error.message });
+  }
+});
+
+// Reopen ticket
+router.patch("/change-priority/:_id", userAuthorization, async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { priority } = req.body;
+    console.log("---------->>>>>>> " + priority);
+    const result = await changePriorityOnTicket({ _id, priority });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "Ticket Priority Changed Successfully",
       });
     }
   } catch (error) {

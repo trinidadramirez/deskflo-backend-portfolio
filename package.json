@@ -1,5 +1,5 @@
 {
-  "name": "deskflo-client-api",
+  "name": "deskflo-backend",
   "version": "1.0.0",
   "description": "deskflo client-side api",
   "main": "app.js",
