@@ -7,7 +7,7 @@ const TicketSchema = new Schema({
   createdDate: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: function(){return Date.now()},
   },
   status: {
     type: String,
@@ -24,7 +24,7 @@ const TicketSchema = new Schema({
   requestor: {
     type: String,
     maxLength: 100,
-    required: true,
+    // required: true,
   },
   shortDescription: {
     type: String,
@@ -42,14 +42,10 @@ const TicketSchema = new Schema({
       sender: {
         type: String,
         maxLength: 50,
-        required: true,
-        default: "",
       },
       message: {
         type: String,
         maxLength: 1000,
-        required: true,
-        default: "",
       },
       msgTimeStamp: {
         type: Date,
