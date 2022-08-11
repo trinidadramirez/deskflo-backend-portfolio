@@ -15,7 +15,6 @@ const { userAuthorization } = require("../auth/authorization");
 const { deleteJwtToken } = require("../helpers/redisHelper");
 
 router.all("/", (req, res, next) => {
-  //res.json({ message: "Return from user router" });
   next();
 });
 

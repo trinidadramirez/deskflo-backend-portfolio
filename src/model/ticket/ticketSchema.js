@@ -50,7 +50,7 @@ const TicketSchema = new Schema({
       msgTimeStamp: {
         type: Date,
         required: true,
-        default: Date.now(),
+        default: function(){return Date.now()},
       },
     }
   ]

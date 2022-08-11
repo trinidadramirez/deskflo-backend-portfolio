@@ -6,6 +6,19 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const port = process.env.PORT || 3001;
+// const io = require("socket.io")(3003, {
+//   cors: {
+//     origin: ["http://localhost:3000", "http://localhost:3002"]
+//   }
+// })
+
+// io.on("connection", socket => {
+//   console.log(socket.id);
+//   socket.on("send-msg", (obj) => {
+//     io.emit("receive-msg", obj)
+//     console.log(obj)
+//   })
+// })
 
 // Load routers
 const userRouter = require("./src/routers/userRouter");
@@ -23,8 +36,8 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGO_URL);
 
 if (process.env.NODE_ENV !== "production") {
-    const mDb = mongoose.connection;
-    mDb.on("open", () => {
+  const mDb = mongoose.connection;
+  mDb.on("open", () => {
     console.log("MongoDB is connected");
   });
 
@@ -38,8 +51,6 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-
 
 // Use routers
 app.use("/user", userRouter);

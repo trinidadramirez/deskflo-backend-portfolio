@@ -7,11 +7,9 @@ const userAuthorization = async (req, res, next) => {
 
   // Check validity of jwt
   const decodedToken = await verifyJwt(authorization);
-  console.log(decodedToken);
 
   if (decodedToken.email) {
     const userId = await getJwtToken(authorization);
-    console.log("userId: " + userId);
 
     if (!userId) {
       return res.status(403).json({ message: "Not Authorized" });

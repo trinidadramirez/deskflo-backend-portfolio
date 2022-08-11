@@ -41,7 +41,7 @@ router.post("/", userAuthorization, async (req, res) => {
     if (result._id) {
       return res.json({
         status: "success",
-        message: "New ticket has been created!",
+        message: "New Ticket Has Been Created!",
       });
     }
   } catch (error) {
@@ -147,7 +147,7 @@ router.patch("/reopen-ticket/:_id", userAuthorization, async (req, res) => {
   }
 });
 
-// Reopen ticket
+// Change ticket priority
 router.patch("/change-priority/:_id", userAuthorization, async (req, res) => {
   try {
     const { _id } = req.params;
